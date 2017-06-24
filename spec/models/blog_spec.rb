@@ -1,6 +1,8 @@
 require "minitest/autorun"
 require_relative "../../app/models/blog.rb"
 require "ostruct"
+require "date"
+require "rr"
 
 describe Blog do
   let(:blog) { Blog.new }
@@ -33,9 +35,35 @@ describe Blog do
 
   describe "#add_entry" do
     it "adds the entry to the blog" do
-      entry = Object.new
+      entry = stub!
       blog.add_entry(entry)
       blog.entries.must_include(entry)
+    end
+  end
+
+  describe "#entries" do
+    def stub_entry_with_date(date)
+      OpenStruct.new(pubdate: DateTime.parse(date))
+    end
+
+    it "is stored in reverse-chronological order" do
+      oldest = stub_entry_with_date("2011-09-09")
+      newest = stub_entry_with_date("2011-09-11")
+      middle = stub_entry_with_date("2011-09-10")
+      blog.add_entry(oldest)
+      blog.add_entry(newest)
+      blog.add_entry(middle)
+      blog.entries.must_equal([newest, middle, oldest])
+    end
+
+    it "is limited to 10 items" do
+      10.times do |i|
+        blog.add_entry(stub_entry_with_date("2011-09-#{i + 1}"))
+      end
+      oldest = stub_entry_with_date("2011-08-30")
+      blog.add_entry(oldest)
+      blog.entries.size.must_equal(10)
+      blog.entries.wont_include(oldest)
     end
   end
 end
