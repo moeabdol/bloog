@@ -1,6 +1,7 @@
 require "minitest/autorun"
 require "ostruct"
 require_relative "../spec_helper_lite"
+require_relative "../../app/exhibits/exhibit.rb"
 require_relative "../../app/exhibits/text_post_exhibit"
 
 describe TextPostExhibit do
