@@ -3,5 +3,10 @@
     <p><time pubdate="pubdate"><%= entry.pubdate %></time></p>
     <h3><%= entry.title %></h3>
   </header>
-  <p><%= entry.body %></p>
+
+  <% if entry.image_url.present? %>
+    <%= render "/posts/picture_body", post: entry %>
+  <% else %>
+    <%= render "/posts/text_body", post: entry %>
+  <% end %>
 </article>

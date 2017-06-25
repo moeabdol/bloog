@@ -5,7 +5,7 @@ class Post
 
   validates :title, presence: true
 
-  attr_accessor :blog, :title, :body, :pubdate
+  attr_accessor :blog, :title, :body, :pubdatea, :image_url
 
   def initialize(attrs = {})
     attrs.each do |k, v| send("#{k}=", v) end
