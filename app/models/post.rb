@@ -5,7 +5,7 @@ class Post
 
   validates :title, presence: true
 
-  attr_accessor :blog, :title, :body, :pubdatea, :image_url
+  attr_accessor :blog, :title, :body, :pubdate, :image_url
 
   def initialize(attrs = {})
     attrs.each do |k, v| send("#{k}=", v) end
@@ -15,6 +15,10 @@ class Post
     return false unless valid?
     self.pubdate = clock.now
     @blog.add_entry(self)
+  end
+
+  def picture?
+    image_url.present?
   end
 
   def persisted?

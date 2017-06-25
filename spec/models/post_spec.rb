@@ -99,4 +99,16 @@ describe Post do
       end
     end
   end
+
+  describe "#picture?" do
+    it "is true when the post has a picture url" do
+      post.image_url = "http://example.org/foo.png"
+      assert(post.picture?)
+    end
+
+    it "is false when the post has no picture url" do
+      post.image_url = ""
+      refute(post.picture?)
+    end
+  end
 end
